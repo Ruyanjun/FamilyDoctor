@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itcast.mapper.DoctorTypeMapper">
+    <select id="queryDoctorTypes" resultType="DoctorType">
+    select dt_id dtid,dt_name dtname from doctortype order by dt_id;
+    </select>
+
+    <insert id="addDoctorType" parameterType="String">
+      insert into Doctortype(dt_name) values(#{value});
+    </insert>
+
+    <update id="updateDoctorType">
+    update DoctorType
+    <set>
+        dt_name=#{1}
+    </set>
+    <where>
+        dt_id=#{0}
+    </where>
+    </update>
+
+    <delete id="deleteDoctorType" parameterType="int">
+      delete from Doctortype where dt_id=#{value}
+    </delete>
+    <select id="queryDoctorsByDtid" resultType="Doctor">
+    select d_id did,d_phone dphone,d_name dname,d_qua dqua,d_local dlcoal,
+    d_cover dcover,d_image1 dimage1,d_image2 dimage2,d_price dprice,d_stock dstock,d_mark dmark
+    from doctor where dt_id=#{0} limit #{1},#{2};
+    </select>
+    <select id="queryCountOfDoctorsByTypeID" resultType="int" parameterType="int">
+    select count(*) from doctor where dt_id=#{value};
+    </select>
+    <select id="queryDoctorTypeNameByDoctorTypeID" resultType="String" parameterType="int">
+    select dt_name from Doctortype where dt_id=#{value};
+    </select>
+    <select id="identifyDtname" resultType="int" parameterType="String">
+      select count(*) from doctortype where dt_name=#{value}
+    </select>
+</mapper>

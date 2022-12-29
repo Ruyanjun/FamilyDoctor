@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itcast.mapper.RecommendMapper">
+    <select id="queryDoctorByRecommendType" resultType="Doctor">
+    select t.dt_id dtid,dt_name dtname,b.d_id did,d_phone dphone,d_name dname,d_qua dqua,d_local dlocal,
+    d_cover dcover,d_image1 dimage1,d_image2 dimage2,d_price dprice,d_stock dstock,d_mark dmark from doctortype t,doctor b,recommend r
+    where t.dt_id=b.dt_id and b.d_id=r.d_id and r_type=#{0} order by b.d_id limit #{1},#{2}
+    </select>
+    <select id="queryRecommendCountOfDoctorsByTypeID" resultType="int" parameterType="int">
+    select count(*) from recommend where r_type=#{0};
+    </select>
+    <select id="queryDoctorByRtypeAndDid" resultType="int">
+    select count(*) from recommend where r_type=#{0} and d_id =#{1};
+    </select>
+    <insert id="addRecommendDoctor">
+    insert into recommend(r_type,d_id) values(#{1},#{0});
+    </insert>
+
+
+    <delete id="removeRecommendDoctor">
+    delete from recommend where r_type=#{1} and d_id=#{0};
+    </delete>
+    <delete id="removeRecommend" parameterType="int">
+    delete from recommend where d_id=#{0};
+    </delete>
+</mapper>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itcast.mapper.DoctorMapper">
+    <insert id="addDoctor" parameterType="Doctor">
+    insert into doctor(d_phone,d_name,d_qua,d_local,d_cover,d_image1,d_image2,d_price,dt_id,
+    d_stock,d_mark) values(#{dphone},#{dname},#{dqua},#{dlocal},#{dcover},#{dimage1},#{dimage2},
+    #{dprice},#{dtid},#{dstock},#{dmark})
+    </insert>
+
+    <update id="modifyDoctor" parameterType="Doctor">
+    update doctor
+    <set>
+        d_phone=#{dphone},d_name=#{dname},d_qua=#{dqua},d_local=#{dlocal},
+        d_cover=#{dcover},d_image1=#{dimage1},d_image2=#{dimage2},d_price=#{dprice},dt_id=#{dtid},
+        d_stock=#{dstock},d_mark=#{dmark},d_mark=#{dmark}
+    </set>
+    <where>
+        d_id=#{did}
+    </where>
+    </update>
+
+    <delete id="removeDoctor" parameterType="int">
+        delete from doctor
+        <where>
+            d_id=#{value}
+        </where>
+    </delete>
+
+    <select id="queryDoctors" resultType="Doctor">
+ 	select t.dt_id dtid,dt_name dtname,d_id did,d_phone dphone,d_name dname,d_qua dqua,d_local dlocal,
+ 	d_cover dcover,d_image1 dimage1,d_image2 dimage2,d_price dprice,d_stock dstock,d_mark dmark from doctortype t,doctor b
+ 	where t.dt_id=b.dt_id order by d_id limit #{0},#{1}
+    </select>
+
+    <select id="queryDoctorById" resultType="Doctor" parameterType="int">
+    select t.dt_id dtid,dt_name dtname,d_id did,d_phone dphone,d_name dname,d_qua dqua,d_local dlocal,
+ 	d_cover dcover,d_image1 dimage1,d_image2 dimage2,d_price dprice,d_stock dstock,d_mark dmark from doctortype t,doctor b
+ 	where t.dt_id=b.dt_id and b.d_id=#{value}
+    </select>
+
+    <select id="queryDoctorByDphone" resultType="Doctor" parameterType="String">
+    select t.dt_id dtid,dt_name dtname,d_id did,d_phone dphone,d_name dname,d_qua dqua,d_local dlocal,
+    d_cover dcover,d_image1 dimage1,d_image2 dimage2,d_price dprice,d_stock dstock,d_mark dmark from doctortype t,doctor b
+ 	where t.dt_id=b.dt_id and b.d_phone=#{value}
+    </select>
+
+    <select id="queryCountOfDoctors" resultType="int">
+    select count(*) from doctor;
+    </select>
+    <select id="queryCountOfDoctorsByKeyword" resultType="int" parameterType="String">
+    select count(*) from doctor where d_name like "%"#{value}"%"
+    </select>
+    <select id="queryDoctorsByKeyword" resultType="Doctor">
+    select t.dt_id dtid,dt_name dtname,d_id did,d_phone dphone,d_name dname,d_qua dqua,d_local dlocal,
+    d_cover dcover,d_image1 dimage1,d_image2 dimage2,d_price dprice,d_stock dstock,d_mark dmark from doctortype t,doctor b
+ 	where t.dt_id=b.dt_id and d_name like "%"#{0}"%" limit #{1},#{2}
+    </select>
+    <delete id="deleteDoctorByDtid" parameterType="int">
+      delete from doctor where d_id=#{value}
+    </delete>
+</mapper>

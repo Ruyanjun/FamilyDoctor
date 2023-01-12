@@ -3,7 +3,7 @@
 <div class="footer">
     <div class="container">
         <div class="text-center">
-            <p>20网络工程3班 © 2020044743236龚俊雄</p>
+            <p>网络工程 © 20200</p>
         </div>
     </div>
 </div>
